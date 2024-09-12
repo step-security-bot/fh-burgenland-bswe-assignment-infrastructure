@@ -1,0 +1,8 @@
+---
+repositories:
+  - name: fh-burgenland-bswe-test-repository
+    teams:
+      - dmuehlbachler
+    aws: false
+    pulumi: false
+    requiredChecks: []

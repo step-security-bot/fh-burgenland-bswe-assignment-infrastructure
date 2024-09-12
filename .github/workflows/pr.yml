@@ -1,0 +1,164 @@
+---
+name: Pull Request
+
+on:
+  pull_request:
+
+env:
+  PULUMI_STACK: dev
+
+permissions:
+  id-token: write
+  contents: write
+
+jobs:
+  conform:
+    runs-on: ubuntu-latest
+    name: Conform
+
+    steps:
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4
+        with:
+          fetch-depth: 0
+
+      - uses: siderolabs/conform@v0.1.0-alpha.27
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+  yamllint:
+    runs-on: ubuntu-latest
+    name: YAMLLint
+
+    steps:
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4
+        with:
+          fetch-depth: 0
+
+      - run: yamllint .
+
+  lint:
+    runs-on: ubuntu-latest
+    name: ESLint
+    strategy:
+      max-parallel: 12
+      matrix:
+        node-version: ["20"]
+
+    steps:
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - run: |
+          yarn install
+          yarn lint
+
+  audit:
+    runs-on: ubuntu-latest
+    name: Node Audit
+    strategy:
+      max-parallel: 12
+      matrix:
+        node-version: ["20"]
+
+    steps:
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - run: |
+          yarn audit
+        continue-on-error: true
+
+  build:
+    runs-on: ubuntu-latest
+    name: Build IaC code
+    strategy:
+      max-parallel: 12
+      matrix:
+        node-version: ["20"]
+
+    steps:
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - run: |
+          yarn install
+          yarn build
+
+  preview:
+    runs-on: ubuntu-latest
+    name: Pulumi Preview
+    needs:
+      - conform
+      - yamllint
+      - lint
+      - audit
+      - build
+    permissions:
+      id-token: write
+      contents: read
+      pull-requests: write
+    strategy:
+      max-parallel: 12
+      matrix:
+        node-version: ["20"]
+
+    steps:
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - uses: hashicorp/vault-action@v3
+        id: import-secrets
+        with:
+          method: jwt
+          url: ${{ secrets.VAULT_ADDR }}
+          path: ${{ secrets.VAULT_PATH }}
+          role: ${{ secrets.VAULT_ROLE }}
+          exportToken: true
+          outputToken: true
+          secrets: |
+            github-fh-burgenland-bswe-assignment-infrastructure/data/pulumi access_token | PULUMI_ACCESS_TOKEN ;
+            github-fh-burgenland-bswe-assignment-infrastructure/data/aws region | AWS_REGION ;
+            github-fh-burgenland-bswe-assignment-infrastructure/data/aws identity_role_arn | AWS_IDENTITY_ROLE_ARN ;
+            github-fh-burgenland-bswe-assignment-infrastructure/data/github token | GH_PAT_TOKEN
+
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ env.AWS_IDENTITY_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - run: |
+          npm install -g yarn
+
+      - run: |
+          yarn install
+          yarn build
+
+      - uses: pulumi/actions@v5
+        with:
+          command: preview
+          stack-name: "${{ env.PULUMI_STACK }}"
+          comment-on-pr: true
+          refresh: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
+        env:
+          GITHUB_TOKEN: "${{ env.GH_PAT_TOKEN }}"
+          VAULT_ADDR: "${{ secrets.VAULT_ADDR }}"
