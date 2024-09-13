@@ -3,6 +3,7 @@ import { Output } from '@pulumi/pulumi';
 
 import { RepositoryConfig } from '../../model/config/repository';
 import { StringMap } from '../../model/map';
+import { environment, githubHandle } from '../configuration';
 
 /**
  * Creates all access permissions for a repository.
@@ -18,6 +19,19 @@ export const createRepositoryAccess = (
   githubTeams: StringMap<github.Team>,
   organizationTeams: StringMap<string>,
 ) => {
+  new github.RepositoryCollaborator(
+    `github-repository-admin-${environment}-${repository.name}`,
+    {
+      repository: githubRepository.name,
+      username: githubHandle,
+      permission: 'admin',
+    },
+    {
+      dependsOn: [githubRepository],
+      retainOnDelete: true,
+    },
+  );
+
   repository.teams.forEach(async (team) => {
     createTeamAccess(
       githubRepository,
@@ -43,7 +57,7 @@ const createTeamAccess = (
   repository.name.apply(
     (repositoryName) =>
       new github.TeamRepository(
-        `github-team-repository-${repositoryName}-${team}`,
+        `github-team-repository-${environment}-${repositoryName}-${team}`,
         {
           repository: repositoryName,
           teamId: teamId,

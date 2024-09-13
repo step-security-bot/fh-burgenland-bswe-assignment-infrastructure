@@ -1,6 +1,7 @@
 import * as github from '@pulumi/github';
 
 import { RepositoryConfig } from '../../model/config/repository';
+import { environment } from '../configuration';
 
 const DEFAULT_BRANCH_RULESET_PATTERNS = ['~DEFAULT_BRANCH'];
 
@@ -14,7 +15,7 @@ export const createRepositoryRulesets = (
   repository: github.Repository,
 ) => {
   new github.RepositoryRuleset(
-    `github-repository-ruleset-${config.name}`,
+    `github-repository-ruleset-${environment}-${config.name}`,
     {
       repository: repository.name,
       target: 'branch',

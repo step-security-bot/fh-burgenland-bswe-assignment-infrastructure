@@ -39,7 +39,7 @@ const createRepository = (
   organizationTeams: StringMap<string>,
 ): github.Repository => {
   const githubRepository = new github.Repository(
-    `github-repo-${repository.name}`,
+    `github-repo-${environment}-${repository.name}`,
     {
       name: repository.name,
       description: `Softwaremanagement II ${environment}: ${repository.service} repository`,

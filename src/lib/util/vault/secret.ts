@@ -1,6 +1,8 @@
 import { Output } from '@pulumi/pulumi';
 import * as vault from '@pulumi/vault';
 
+import { environment } from '../../configuration';
+
 /**
  * Stores a value in Vault.
  *
@@ -16,7 +18,7 @@ export const writeToVault = (
   vaultStore?.path?.apply(
     (storePath) =>
       new vault.kv.SecretV2(
-        `vault-secret-${storePath}-${key}`,
+        `vault-secret-${environment}-${storePath}-${key}`,
         {
           mount: storePath,
           name: key,

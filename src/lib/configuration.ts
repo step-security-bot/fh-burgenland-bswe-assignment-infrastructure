@@ -10,6 +10,8 @@ const data = parseDataFromFile('./assets/data.yaml');
 export const repositories = data.repositories;
 export const teams = data.teams;
 
+export const githubHandle = 'muhlba91';
+
 export const awsDefaultRegion = 'eu-west-1';
 
 export const commonLabels = {

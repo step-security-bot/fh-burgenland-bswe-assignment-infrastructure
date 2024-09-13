@@ -29,7 +29,7 @@ export const configurePulumi = (store: vault.Mount): string[] => {
  */
 const configureRepository = (repository: string, store: vault.Mount) => {
   const accessToken = new pulumiservice.AccessToken(
-    `pulumi-access-token-${repository}`,
+    `pulumi-access-token-${environment}-${repository}`,
     {
       description: `FH Burgenland: BSWE assignment ${environment} repository: ${repository}`,
     },

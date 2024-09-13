@@ -20,7 +20,7 @@ export const createTeams = (): StringMap<github.Team> =>
  */
 const createTeam = (team: TeamConfig): github.Team => {
   const githubTeam = new github.Team(
-    `github-team-${team.name}`,
+    `github-team-${environment}-${team.name}`,
     {
       name: team.name,
       description: `Softwaremanagement II ${environment}: ${team.name}`,
@@ -34,7 +34,7 @@ const createTeam = (team: TeamConfig): github.Team => {
   team.members.forEach(
     (member) =>
       new github.TeamMembership(
-        `github-team-membership-${team.name}-${member}`,
+        `github-team-membership-${environment}-${team.name}-${member}`,
         {
           teamId: githubTeam.id,
           username: member,
