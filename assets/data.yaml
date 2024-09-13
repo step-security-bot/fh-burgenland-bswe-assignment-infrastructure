@@ -1,0 +1,15 @@
+---
+teams:
+  - name: swm2-dmuehlbachler-dev
+    deleteOnDestroy: true
+    members:
+      - muhlba91
+repositories:
+  - name: swm2-test-repository-dev
+    service: accounts
+    deleteOnDestroy: true
+    teams:
+      - swm2-dmuehlbachler-dev
+    aws: false
+    pulumi: false
+    requiredChecks: []

@@ -1,7 +1,7 @@
 import * as pulumiservice from '@pulumi/pulumiservice';
 import * as vault from '@pulumi/vault';
 
-import { repositories } from '../configuration';
+import { environment, repositories } from '../configuration';
 import { writeToGitHubActionsSecret } from '../util/github/secret';
 import { writeToVault } from '../util/vault/secret';
 
@@ -12,7 +12,7 @@ import { writeToVault } from '../util/vault/secret';
  * @returns {string[]} the repositories which requested an access token
  */
 export const configurePulumi = (store: vault.Mount): string[] => {
-  const repos = repositories.repositories
+  const repos = repositories
     .filter((repo) => repo.pulumi)
     .map((repo) => repo.name);
 
@@ -31,7 +31,7 @@ const configureRepository = (repository: string, store: vault.Mount) => {
   const accessToken = new pulumiservice.AccessToken(
     `pulumi-access-token-${repository}`,
     {
-      description: `GitHub Repository: ${repository}`,
+      description: `FH Burgenland: BSWE assignment ${environment} repository: ${repository}`,
     },
     {},
   );

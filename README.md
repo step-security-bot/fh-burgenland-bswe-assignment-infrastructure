@@ -56,15 +56,22 @@ The following section describes the configuration which must be set in the Pulum
 
 ### YAML Configuration
 
-Repositories are defined in YAML format in the file [`assets/repositories.yml`](assets/repositories.yml).
+Repositories and teams are defined in YAML format in the file [`assets/data.yml`](assets/data.yml).
 
 ```yaml
 ---
+teams:
+  - name: name
+    deleteOnDestroy: false # deletes the team on stack destroy (optional, default: false)
+    members:
+      - user-a
+      - user-b
 repositories:
   - name: name
     teams: # provides access to the repository
       - team-a
       - team-b
+    deleteOnDestroy: false # deletes the repository on stack destroy (optional, default: false)
     aws: true # creates and stores an AWS access key
     pulumi: true # creates and stores a Pulumi access token
     requiredChecks: [] # sets required checks for the repository

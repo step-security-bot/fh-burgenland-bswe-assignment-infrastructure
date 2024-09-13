@@ -1,28 +1,20 @@
 import * as github from '@pulumi/github';
 
 import { RepositoryConfig } from '../../model/config/repository';
-import { repositories } from '../configuration';
 
 const DEFAULT_BRANCH_RULESET_PATTERNS = ['~DEFAULT_BRANCH'];
 
 /**
  * Creates GitHub repository rulesets.
  *
- * @param {StringMap<github.GetRepositoryResult>} githubRepositories the GitHub repositories
+ * @param {github.Repository} repository the repository
  */
-export const createRepositoryRulesets = () =>
-  repositories.repositories.forEach((repository) =>
-    createRepositoryRuleset(repository),
-  );
-
-/**
- * Creates a GitHub repository ruleset.
- *
- * @param {RepositoryConfig} repository the repository configuration
- */
-const createRepositoryRuleset = (repository: RepositoryConfig) => {
+export const createRepositoryRulesets = (
+  config: RepositoryConfig,
+  repository: github.Repository,
+) => {
   new github.RepositoryRuleset(
-    `github-repository-ruleset-${repository.name}`,
+    `github-repository-ruleset-${config.name}`,
     {
       repository: repository.name,
       target: 'branch',
@@ -44,9 +36,9 @@ const createRepositoryRuleset = (repository: RepositoryConfig) => {
         requiredLinearHistory: true,
         requiredSignatures: false,
         requiredStatusChecks:
-          repository.requiredChecks.length > 0
+          config.requiredChecks.length > 0
             ? {
-                requiredChecks: repository.requiredChecks.map((check) => ({
+                requiredChecks: config.requiredChecks.map((check) => ({
                   context: check,
                 })),
                 strictRequiredStatusChecksPolicy: true,
@@ -74,6 +66,8 @@ const createRepositoryRuleset = (repository: RepositoryConfig) => {
         },
       },
     },
-    {},
+    {
+      dependsOn: [repository],
+    },
   );
 };
