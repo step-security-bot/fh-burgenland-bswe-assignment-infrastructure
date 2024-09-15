@@ -24,7 +24,7 @@ export = async () => {
   let vaultStore = undefined;
   let aws: string[] = [];
 
-  const needsVault = repositories.some((repo) => repo.aws || repo.pulumi);
+  const needsVault = repositories.some((repo) => repo.aws);
   if (needsVault) {
     vaultStore = createStore();
     aws = configureAwsAccounts(vaultStore);

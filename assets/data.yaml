@@ -11,5 +11,4 @@ repositories:
     teams:
       - swm2-dmuehlbachler-dev
     aws: false
-    pulumi: false
     requiredChecks: []
