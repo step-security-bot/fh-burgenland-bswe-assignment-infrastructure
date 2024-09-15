@@ -42,10 +42,15 @@ jobs:
           exportToken: true
           outputToken: true
           secrets: |
-            github-fh-burgenland-bswe-assignment-infrastructure/data/pulumi access_token | PULUMI_ACCESS_TOKEN ;
             github-fh-burgenland-bswe-assignment-infrastructure/data/aws region | AWS_REGION ;
             github-fh-burgenland-bswe-assignment-infrastructure/data/aws identity_role_arn | AWS_IDENTITY_ROLE_ARN ;
             github-fh-burgenland-bswe-assignment-infrastructure/data/github token | GH_PAT_TOKEN
+
+      - uses: pulumi/auth-actions@v1
+        with:
+          organization: muhlba91
+          requested-token-type: urn:pulumi:token-type:access_token:personal
+          scope: user:muhlba91
 
       - uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -97,10 +102,15 @@ jobs:
           exportToken: true
           outputToken: true
           secrets: |
-            github-fh-burgenland-bswe-assignment-infrastructure/data/pulumi access_token | PULUMI_ACCESS_TOKEN ;
             github-fh-burgenland-bswe-assignment-infrastructure/data/aws region | AWS_REGION ;
             github-fh-burgenland-bswe-assignment-infrastructure/data/aws identity_role_arn | AWS_IDENTITY_ROLE_ARN ;
             github-fh-burgenland-bswe-assignment-infrastructure/data/github token | GH_PAT_TOKEN
+
+      - uses: pulumi/auth-actions@v1
+        with:
+          organization: muhlba91
+          requested-token-type: urn:pulumi:token-type:access_token:personal
+          scope: user:muhlba91
 
       - uses: aws-actions/configure-aws-credentials@v4
         with:
