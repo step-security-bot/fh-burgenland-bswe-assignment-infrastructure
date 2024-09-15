@@ -48,9 +48,9 @@ jobs:
 
       - uses: pulumi/auth-actions@v1
         with:
-          organization: muhlba91
+          organization: dmuehlbachler-fh-burgenland
           requested-token-type: urn:pulumi:token-type:access_token:personal
-          scope: user:muhlba91
+          scope: user:dmuehlbachler-fh-burgenland
 
       - uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -108,9 +108,9 @@ jobs:
 
       - uses: pulumi/auth-actions@v1
         with:
-          organization: muhlba91
+          organization: dmuehlbachler-fh-burgenland
           requested-token-type: urn:pulumi:token-type:access_token:personal
-          scope: user:muhlba91
+          scope: user:dmuehlbachler-fh-burgenland
 
       - uses: aws-actions/configure-aws-credentials@v4
         with:

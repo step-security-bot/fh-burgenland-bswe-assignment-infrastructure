@@ -6,7 +6,6 @@ import { configureAwsAccounts } from './lib/aws';
 import { repositories } from './lib/configuration';
 import { createRepositories } from './lib/github';
 import { createTeams } from './lib/github/team';
-import { configurePulumi } from './lib/pulumi';
 import { createStore } from './lib/vault';
 
 export = async () => {
@@ -23,20 +22,17 @@ export = async () => {
   const githubRepositories = createRepositories(githubTeams, organizationTeams);
 
   let vaultStore = undefined;
-  let pulumis: string[] = [];
   let aws: string[] = [];
 
   const needsVault = repositories.some((repo) => repo.aws || repo.pulumi);
   if (needsVault) {
     vaultStore = createStore();
-    pulumis = configurePulumi(vaultStore);
     aws = configureAwsAccounts(vaultStore);
   }
 
   return {
     vault: vaultStore ? vaultStore.path : '',
     aws: aws,
-    pulumi: pulumis,
     teams: Object.keys(githubTeams),
     repositories: Object.keys(githubRepositories),
   };
