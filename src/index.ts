@@ -27,7 +27,7 @@ export = async () => {
   const needsVault = repositories.some((repo) => repo.aws);
   if (needsVault) {
     vaultStore = createStore();
-    aws = configureAwsAccounts(vaultStore);
+    aws = await configureAwsAccounts(vaultStore);
   }
 
   return {
