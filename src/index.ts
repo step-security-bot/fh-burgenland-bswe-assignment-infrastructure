@@ -1,6 +1,6 @@
 /* eslint-disable functional/no-let */
 
-import * as github from '@pulumi/github';
+import { Output } from '@pulumi/pulumi';
 
 import { configureAwsAccounts } from './lib/aws';
 import { repositories } from './lib/configuration';
@@ -9,31 +9,22 @@ import { createTeams } from './lib/github/team';
 import { createStore } from './lib/vault';
 
 export = async () => {
-  const organizationTeams = Object.fromEntries(
-    (
-      await github.getOrganizationTeams({
-        rootTeamsOnly: true,
-        resultsPerPage: 100,
-        summaryOnly: true,
-      })
-    ).teams.map((team) => [team.slug, team.id.toString()]),
-  );
   const githubTeams = createTeams();
-  const githubRepositories = createRepositories(githubTeams, organizationTeams);
+  const githubRepositories = createRepositories(githubTeams);
 
   let vaultStore = undefined;
-  let aws: string[] = [];
+  let aws: Output<string>[] = [];
 
   const needsVault = repositories.some((repo) => repo.aws);
   if (needsVault) {
     vaultStore = createStore();
-    aws = await configureAwsAccounts(vaultStore);
+    aws = await configureAwsAccounts(githubRepositories, vaultStore);
   }
 
   return {
     vault: vaultStore ? vaultStore.path : '',
     aws: aws,
-    teams: Object.keys(githubTeams),
-    repositories: Object.keys(githubRepositories),
+    teams: Object.values(githubTeams).map((team) => team.name),
+    repositories: Object.values(githubRepositories).map((repo) => repo.name),
   };
 };

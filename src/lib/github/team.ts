@@ -2,7 +2,7 @@ import * as github from '@pulumi/github';
 
 import { TeamConfig } from '../../model/config/team';
 import { StringMap } from '../../model/map';
-import { environment, teams } from '../configuration';
+import { environment, globalName, teams } from '../configuration';
 
 /**
  * Creates all GitHub teams.
@@ -20,9 +20,9 @@ export const createTeams = (): StringMap<github.Team> =>
  */
 const createTeam = (team: TeamConfig): github.Team => {
   const githubTeam = new github.Team(
-    `github-team-${environment}-${team.name}`,
+    `github-team-${team.name}`,
     {
-      name: team.name,
+      name: `${globalName}-${environment}-${team.name}`,
       description: `Softwaremanagement II ${environment}: ${team.name}`,
       privacy: 'secret',
     },
@@ -34,7 +34,7 @@ const createTeam = (team: TeamConfig): github.Team => {
   team.members.forEach(
     (member) =>
       new github.TeamMembership(
-        `github-team-membership-${environment}-${team.name}-${member}`,
+        `github-team-membership-${team.name}-${member}`,
         {
           teamId: githubTeam.id,
           username: member,

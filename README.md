@@ -56,7 +56,7 @@ The following section describes the configuration which must be set in the Pulum
 
 ### YAML Configuration
 
-Repositories and teams are defined in YAML format in the file [`assets/data.yml`](assets/data.yml).
+Repositories and teams are defined in YAML format in the file `assets/data_<stack>.yml` where `<stack>` is the name of the Pulumi stack.
 
 ```yaml
 ---

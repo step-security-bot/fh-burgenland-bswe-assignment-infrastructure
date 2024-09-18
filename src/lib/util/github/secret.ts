@@ -1,8 +1,6 @@
 import * as github from '@pulumi/github';
 import { Output } from '@pulumi/pulumi';
 
-import { environment } from '../../configuration';
-
 /**
  * Stores a value in GitHub Actions secrets.
  *
@@ -16,7 +14,7 @@ export const writeToGitHubActionsSecret = (
   value: Output<string>,
 ) => {
   new github.ActionsSecret(
-    `github-actions-secret-${environment}-${repository}-${key}`,
+    `github-actions-secret-${repository}-${key}`,
     {
       repository: repository,
       secretName: key,

@@ -4,9 +4,6 @@ name: Pull Request
 on:
   pull_request:
 
-env:
-  PULUMI_STACK: dev
-
 permissions:
   id-token: write
   contents: write
@@ -116,6 +113,8 @@ jobs:
       max-parallel: 12
       matrix:
         node-version: ["20"]
+        stack:
+          - dev
 
     steps:
       - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4
@@ -161,7 +160,7 @@ jobs:
       - uses: pulumi/actions@v5
         with:
           command: preview
-          stack-name: "${{ env.PULUMI_STACK }}"
+          stack-name: ${{ matrix.stack }}
           comment-on-pr: true
           refresh: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
         env:

@@ -2,7 +2,7 @@ import * as github from '@pulumi/github';
 
 import { RepositoryConfig } from '../../model/config/repository';
 import { StringMap } from '../../model/map';
-import { environment, repositories } from '../configuration';
+import { environment, globalName, repositories } from '../configuration';
 
 import { createRepositoryAccess } from './access';
 import { createRepositoryRulesets } from './ruleset';
@@ -11,17 +11,15 @@ import { createRepositoryRulesets } from './ruleset';
  * Creates all GitHub repositories.
  *
  * @param {StringMap<github.Team>} githubTeams the GitHub teams
- * @param {StringMap<string>} organizationTeams the organization teams
  * @returns {StringMap<github.Repository>} the configured repositories
  */
 export const createRepositories = (
   githubTeams: StringMap<github.Team>,
-  organizationTeams: StringMap<string>,
 ): StringMap<github.Repository> =>
   Object.fromEntries(
     repositories.map((repository) => [
       repository.name,
-      createRepository(repository, githubTeams, organizationTeams),
+      createRepository(repository, githubTeams),
     ]),
   );
 
@@ -30,22 +28,20 @@ export const createRepositories = (
  *
  * @param {RepositoryConfig} repository the repository configuration
  * @param {StringMap<github.Team>} githubTeams the GitHub teams
- * @param {StringMap<string>} organizationTeams the organization teams
  * @returns {github.Repository} the repository
  */
 const createRepository = (
   repository: RepositoryConfig,
   githubTeams: StringMap<github.Team>,
-  organizationTeams: StringMap<string>,
 ): github.Repository => {
   const githubRepository = new github.Repository(
-    `github-repo-${environment}-${repository.name}`,
+    `github-repo-${repository.name}`,
     {
-      name: repository.name,
+      name: `${globalName}-${environment}-${repository.name}`,
       description: `Softwaremanagement II ${environment}: ${repository.service} repository`,
       hasDiscussions: false,
       hasWiki: true,
-      topics: ['swm2', environment, repository.service].sort(),
+      topics: [globalName, environment, repository.service].sort(),
       visibility: 'private',
       allowAutoMerge: false,
       allowMergeCommit: false,
@@ -72,12 +68,7 @@ const createRepository = (
   );
 
   createRepositoryRulesets(repository, githubRepository);
-  createRepositoryAccess(
-    repository,
-    githubRepository,
-    githubTeams,
-    organizationTeams,
-  );
+  createRepositoryAccess(repository, githubRepository, githubTeams);
 
   return githubRepository;
 };
