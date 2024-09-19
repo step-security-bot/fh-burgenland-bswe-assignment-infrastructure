@@ -11,4 +11,5 @@ repositories:
     teams:
       - dmuehlbachler
     aws: false
+    pulumi: false
     requiredChecks: []
