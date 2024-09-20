@@ -6,7 +6,7 @@ import { configureAwsAccounts } from './lib/aws';
 import { repositories } from './lib/configuration';
 import { createRepositories } from './lib/github';
 import { createTeams } from './lib/github/team';
-import { configurePulumi } from './lib/pulumi';
+import { configureTerraform } from './lib/pulumi';
 import { createStore } from './lib/vault';
 import { StringMap } from './model/map';
 
@@ -15,20 +15,20 @@ export = async () => {
   const githubRepositories = createRepositories(githubTeams);
 
   let vaultStore = undefined;
-  let pulumis: StringMap<Output<string>> = {};
-  let aws: Output<string>[] = [];
+  let terraform: StringMap<Output<string>> = {};
+  let aws: StringMap<Output<string>> = {};
 
-  const needsVault = repositories.some((repo) => repo.aws || repo.pulumi);
+  const needsVault = repositories.some((repo) => repo.aws || repo.terraform);
   if (needsVault) {
     vaultStore = createStore();
-    pulumis = configurePulumi(vaultStore);
+    terraform = configureTerraform(vaultStore);
     aws = await configureAwsAccounts(githubRepositories, vaultStore);
   }
 
   return {
     vault: vaultStore ? vaultStore.path : '',
     aws: aws,
-    pulumi: pulumis,
+    terraform: terraform,
     teams: Object.values(githubTeams).map((team) => team.name),
     repositories: Object.values(githubRepositories).map((repo) => repo.name),
   };

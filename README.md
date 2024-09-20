@@ -73,9 +73,21 @@ repositories:
       - team-b
     deleteOnDestroy: false # deletes the repository on stack destroy (optional, default: false)
     aws: true # creates and stores an AWS access key
-    pulumi: true # creates and stores a Pulumi access token
+    terraform: true # creates a Terraform backend bucket
     requiredChecks: [] # sets required checks for the repository
 ```
+
+---
+
+## Outputs
+
+The following outputs are available after the stack has been created:
+
+- `vault`: the Vault secret path
+- `aws`: a map containing the repositories with AWS access and their role ARN for authentication
+- `terraform`: a map containing the repositories with Terraform backend bucket information
+- `teams`: a list of all created teams
+- `repositories`: a list of all created repositories
 
 ---
 

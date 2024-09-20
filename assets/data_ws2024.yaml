@@ -5,11 +5,11 @@ repositories:
     service: api-specifications
     teams: []
     aws: false
-    pulumi: false
+    terraform: false
     requiredChecks: []
   - name: kubernetes-applications
     service: kubernetes-applications
     teams: []
     aws: false
-    pulumi: false
+    terraform: false
     requiredChecks: []

@@ -1,62 +1,63 @@
+import * as aws from '@pulumi/aws';
 import { Output } from '@pulumi/pulumi';
-import * as pulumiservice from '@pulumi/pulumiservice';
 import * as vault from '@pulumi/vault';
 
 import { StringMap } from '../../model/map';
-import { environment, repositories } from '../configuration';
+import {
+  commonLabels,
+  environment,
+  globalName,
+  repositories,
+} from '../configuration';
 import { writeToVault } from '../util/vault/secret';
 
 /**
- * Creates all Pulumi related infrastructure.
+ * Creates all Terraform related infrastructure.
  *
  * @param {vault.Mount} store the vault store
- * @returns {StringMap<Output<string>>} the repositories and their Pulumi access tokens
+ * @returns {StringMap<Output<string>>} the repositories and their Terraform backend buckets
  */
-export const configurePulumi = (
+export const configureTerraform = (
   store: vault.Mount,
 ): StringMap<Output<string>> => {
-  const repos = repositories
-    .filter((repo) => repo.pulumi)
-    .map((repo) => repo.name);
-
-  const accessTokens = Object.fromEntries(
-    repos.map((repository) => [
-      repository,
-      configureRepository(repository, store),
-    ]),
+  const buckets = Object.fromEntries(
+    repositories
+      .filter((repo) => repo.terraform)
+      .map((repo) => [repo.name, configureRepository(repo.name, store)]),
   );
 
-  return accessTokens;
+  return buckets;
 };
 
 /**
- * Configures a repository for Pulumi.
+ * Configures a repository for Terraform.
  *
  * @param {string} repository the repository
  * @param {vault.Mount} store the vault store
- * @returns {Output<string>} the Pulumi access token
+ * @returns {Output<string>} the Terraform backend bucket
  */
 const configureRepository = (
   repository: string,
   store: vault.Mount,
 ): Output<string> => {
-  const accessToken = new pulumiservice.AccessToken(
-    `pulumi-access-token-${environment}-${repository}`,
+  const bucket = new aws.s3.Bucket(
+    `aws-s3-bucket-terraform-${environment}-${repository}`,
     {
-      description: `FH Burgenland: BSWE assignment ${environment} repository: ${repository}`,
+      bucketPrefix: `bswe-${globalName}-${environment}-${repository}`,
+      tags: commonLabels,
     },
     {},
   );
 
   writeToVault(
-    'pulumi',
-    accessToken.value.apply((token) =>
+    `pulumi-${repository}`,
+    bucket.bucket.apply((bucketName) =>
       JSON.stringify({
-        access_token: token ?? '',
+        bucket: bucketName,
       }),
     ),
     store,
   );
 
-  return accessToken.value;
+  return bucket.bucket;
 };

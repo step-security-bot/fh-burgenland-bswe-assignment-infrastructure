@@ -19,12 +19,13 @@ import { writeToVault } from '../util/vault/secret';
  * @param {string} repository the repository
  * @param {Output<string>} identityProviderArn the identity provider ARN
  * @param {vault.Mount} store the vault store
+ * @returns {Output<string>} the IAM role ARN
  */
 export const createAccountIam = (
   repository: Output<string>,
   identityProviderArn: string,
   store: vault.Mount,
-) => {
+): Output<string> => {
   const labels = {
     ...commonLabels,
     organization: 'fh-burgenland-bswe',
@@ -139,8 +140,8 @@ export const createAccountIam = (
                     's3:UntagResource',
                   ],
                   resources: [
-                    `arn:aws:s3:::fh-burgenland-bswe-${globalName}-${environment}-*`,
-                    `arn:aws:s3:::fh-burgenland-bswe-${globalName}-${environment}-*/*`,
+                    `arn:aws:s3:::bswe-${globalName}-${environment}-*`,
+                    `arn:aws:s3:::bswe-${globalName}-${environment}-*/*`,
                   ],
                 },
                 {
@@ -183,7 +184,7 @@ export const createAccountIam = (
                     'cloudfront:UpdateResponseHeadersPolicy',
                   ],
                   resources: [
-                    `arn:aws:cloudfront:${awsDefaultRegion}::distribution/fh-burgenland-bswe-${globalName}-${environment}-*`,
+                    `arn:aws:cloudfront:${awsDefaultRegion}::distribution/bswe-${globalName}-${environment}-*`,
                     `arn:aws:cloudfront:${awsDefaultRegion}::origin-access-identity/*`,
                     `arn:aws:cloudfront:${awsDefaultRegion}::origin-request-policy/*`,
                     `arn:aws:cloudfront:${awsDefaultRegion}::response-headers-policy/*`,
@@ -220,16 +221,18 @@ export const createAccountIam = (
       'AWS_REGION',
       Output.create(awsDefaultRegion),
     );
+
+    writeToVault(
+      `aws-${repo}`,
+      ciRole.arn.apply((ciRoleArn) =>
+        JSON.stringify({
+          identity_role_arn: ciRoleArn,
+          region: awsDefaultRegion,
+        }),
+      ),
+      store,
+    );
   });
 
-  writeToVault(
-    'aws',
-    ciRole.arn.apply((ciRoleArn) =>
-      JSON.stringify({
-        identity_role_arn: ciRoleArn,
-        region: awsDefaultRegion,
-      }),
-    ),
-    store,
-  );
+  return ciRole.arn;
 };

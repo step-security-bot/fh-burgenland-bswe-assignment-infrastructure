@@ -18,18 +18,23 @@ import { createAccountIam } from './iam';
 export const configureAwsAccounts = async (
   githubRepositories: StringMap<github.Repository>,
   store: vault.Mount,
-): Promise<Output<string>[]> => {
+): Promise<StringMap<Output<string>>> => {
   const identityProvider = await aws.iam.getOpenIdConnectProvider({
     url: 'https://token.actions.githubusercontent.com',
   });
 
-  const repos = repositories
-    .filter((repo) => repo.aws)
-    .map((repo) => githubRepositories[repo.name].name);
-
-  repos.forEach((repository) =>
-    createAccountIam(repository, identityProvider.arn, store),
+  const accounts = Object.fromEntries(
+    repositories
+      .filter((repo) => repo.aws)
+      .map((repo) => [
+        repo.name,
+        createAccountIam(
+          githubRepositories[repo.name].name,
+          identityProvider.arn,
+          store,
+        ),
+      ]),
   );
 
-  return repos;
+  return accounts;
 };
