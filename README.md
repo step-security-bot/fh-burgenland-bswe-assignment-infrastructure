@@ -68,12 +68,13 @@ teams:
       - user-b
 repositories:
   - name: name
+    service: service # the service name
     teams: # provides access to the repository
       - team-a
       - team-b
     deleteOnDestroy: false # deletes the repository on stack destroy (optional, default: false)
-    aws: true # creates and stores an AWS access key
-    terraform: true # creates a Terraform backend bucket
+    aws: false # creates and stores an AWS access key
+    terraform: false # creates a Terraform backend bucket
     requiredChecks: [] # sets required checks for the repository
 ```
 
