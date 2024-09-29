@@ -13,3 +13,147 @@ repositories:
     aws: false
     terraform: false
     requiredChecks: []
+  - name: group-a-accounts
+    service: accounts
+    teams: []
+    aws: false
+    terraform: false
+    requiredChecks: []
+  - name: group-a-transactions
+    service: transactions
+    teams: []
+    aws: false
+    terraform: false
+    requiredChecks: []
+  - name: group-b-accounts
+    service: accounts
+    teams: []
+    aws: false
+    terraform: false
+    requiredChecks: []
+  - name: group-b-transactions
+    service: transactions
+    teams: []
+    aws: false
+    terraform: false
+    requiredChecks: []
+  - name: group-c-accounts
+    service: accounts
+    teams: []
+    aws: false
+    terraform: false
+    requiredChecks: []
+  - name: group-c-transactions
+    service: transactions
+    teams: []
+    aws: false
+    terraform: false
+    requiredChecks: []
+  - name: group-d-accounts
+    service: accounts
+    teams: []
+    aws: false
+    terraform: false
+    requiredChecks: []
+  - name: group-d-transactions
+    service: transactions
+    teams: []
+    aws: false
+    terraform: false
+    requiredChecks: []
+  - name: group-e-accounts
+    service: accounts
+    teams: []
+    aws: false
+    terraform: false
+    requiredChecks: []
+  - name: group-e-transactions
+    service: transactions
+    teams: []
+    aws: false
+    terraform: false
+    requiredChecks: []
+  - name: group-f-accounts
+    service: accounts
+    teams: []
+    aws: false
+    terraform: false
+    requiredChecks: []
+  - name: group-f-transactions
+    service: transactions
+    teams: []
+    aws: false
+    terraform: false
+    requiredChecks: []
+  - name: group-g-accounts
+    service: accounts
+    teams: []
+    aws: false
+    terraform: false
+    requiredChecks: []
+  - name: group-g-transactions
+    service: transactions
+    teams: []
+    aws: false
+    terraform: false
+    requiredChecks: []
+  - name: group-h-accounts
+    service: accounts
+    teams: []
+    aws: false
+    terraform: false
+    requiredChecks: []
+  - name: group-h-transactions
+    service: transactions
+    teams: []
+    aws: false
+    terraform: false
+    requiredChecks: []
+  - name: group-i-accounts
+    service: accounts
+    teams: []
+    aws: false
+    terraform: false
+    requiredChecks: []
+  - name: group-i-transactions
+    service: transactions
+    teams: []
+    aws: false
+    terraform: false
+    requiredChecks: []
+  - name: group-j-accounts
+    service: accounts
+    teams: []
+    aws: false
+    terraform: false
+    requiredChecks: []
+  - name: group-j-transactions
+    service: transactions
+    teams: []
+    aws: false
+    terraform: false
+    requiredChecks: []
+  - name: group-k-accounts
+    service: accounts
+    teams: []
+    aws: false
+    terraform: false
+    requiredChecks: []
+  - name: group-k-transactions
+    service: transactions
+    teams: []
+    aws: false
+    terraform: false
+    requiredChecks: []
+  - name: group-l-accounts
+    service: accounts
+    teams: []
+    aws: false
+    terraform: false
+    requiredChecks: []
+  - name: group-l-transactions
+    service: transactions
+    teams: []
+    aws: false
+    terraform: false
+    requiredChecks: []
