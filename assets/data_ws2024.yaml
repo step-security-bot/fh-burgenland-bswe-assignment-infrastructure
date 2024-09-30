@@ -6,13 +6,18 @@ repositories:
     teams: []
     aws: false
     terraform: false
-    requiredChecks: []
+    requiredChecks:
+      - Conform
+      - Spectral Linter
+      - YAMLLint
   - name: kubernetes-applications
     service: kubernetes-applications
     teams: []
     aws: false
     terraform: false
-    requiredChecks: []
+    requiredChecks:
+      - Conform
+      - YAMLLint
   - name: group-a-accounts
     service: accounts
     teams: []
