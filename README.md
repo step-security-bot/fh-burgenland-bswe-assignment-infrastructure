@@ -72,6 +72,7 @@ repositories:
     teams: # provides access to the repository
       - team-a
       - team-b
+    approvers: 1 # the number of required approvers (optional, default: 1)
     deleteOnDestroy: false # deletes the repository on stack destroy (optional, default: false)
     aws: false # creates and stores an AWS access key
     terraform: false # creates a Terraform backend bucket

@@ -7,9 +7,10 @@ teams:
 repositories:
   - name: test-repository
     service: accounts
-    deleteOnDestroy: true
     teams:
       - dmuehlbachler
+    approvers: 2
+    deleteOnDestroy: true
     aws: false
     terraform: false
     requiredChecks: []

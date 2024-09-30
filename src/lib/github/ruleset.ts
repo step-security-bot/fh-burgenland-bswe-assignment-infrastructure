@@ -27,7 +27,7 @@ export const createRepositoryRulesets = (
         pullRequest: {
           dismissStaleReviewsOnPush: true,
           requireCodeOwnerReview: false,
-          requiredApprovingReviewCount: 1,
+          requiredApprovingReviewCount: getApproversCount(config),
           requiredReviewThreadResolution: true,
           requireLastPushApproval: true,
         },
@@ -39,12 +39,12 @@ export const createRepositoryRulesets = (
         requiredStatusChecks:
           config.requiredChecks.length > 0
             ? {
-              requiredChecks: config.requiredChecks.map((check) => ({
-                context: check,
-                integrationId: 15368,
-              })),
-              strictRequiredStatusChecksPolicy: true,
-            }
+                requiredChecks: config.requiredChecks.map((check) => ({
+                  context: check,
+                  integrationId: 15368,
+                })),
+                strictRequiredStatusChecksPolicy: true,
+              }
             : undefined,
         update: true,
         updateAllowsFetchAndMerge: false,
@@ -73,3 +73,12 @@ export const createRepositoryRulesets = (
     },
   );
 };
+
+/**
+ * Get the number of required approvers.
+ *
+ * @param {RepositoryConfig} config the repository config
+ * @returns {number} the number of required approvers
+ */
+const getApproversCount = (config: RepositoryConfig): number =>
+  config.approvers && config.approvers > 0 ? config.approvers : 1;

@@ -4,6 +4,7 @@ repositories:
   - name: api-specifications
     service: api-specifications
     teams: []
+    approvers: 2
     aws: false
     terraform: false
     requiredChecks:
@@ -13,6 +14,7 @@ repositories:
   - name: kubernetes-applications
     service: kubernetes-applications
     teams: []
+    approvers: 2
     aws: false
     terraform: false
     requiredChecks:
