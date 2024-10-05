@@ -1,9 +1,79 @@
 ---
-teams: []
+teams:
+  - name: group-a
+    members:
+      - LeonFHBurgenland
+      - janjungwirth
+  - name: group-b
+    members:
+      - FHBLH
+      - "2310859030"
+      - Matschoen
+  - name: group-c
+    members:
+      - 912Gloria912
+      - HeckMich
+      - Golmaino
+  - name: group-d
+    members:
+      - stx85
+      - sarah390
+      - Semi
+  - name: group-e
+    members:
+      - Vanessa-prinz
+      - KammererLara
+      - JuliaMichler
+  - name: group-f
+    members:
+      - Beginner
+      - sourifh
+      - andwein
+  - name: group-g
+    members:
+      - Farumai
+      - papertnzz
+      - DarioDzakic
+  - name: group-h
+    members:
+      - Schnobi2
+      - gellenricsi
+      - Marcel-TO
+  - name: group-i
+    members:
+      - agre1
+      - SgcSwitch666
+      - ChrisSchlg
+  - name: group-j
+    members:
+      - Kinteshi1
+      - danrim001
+      - abelhorvath04
+  - name: group-k
+    members:
+      - AndreasDoetzl
+      - GeorgFH
+      - Mikomy
+  - name: group-l
+    members:
+      - Efnan99
+      - KhaledAlnahhas1
 repositories:
   - name: api-specifications
     service: api-specifications
-    teams: []
+    teams:
+      - group-a
+      - group-b
+      - group-c
+      - group-d
+      - group-e
+      - group-f
+      - group-g
+      - group-h
+      - group-i
+      - group-j
+      - group-k
+      - group-l
     approvers: 2
     aws: false
     terraform: false
@@ -22,145 +92,169 @@ repositories:
       - YAMLLint
   - name: group-a-accounts
     service: accounts
-    teams: []
+    teams:
+      - group-a
     aws: false
     terraform: false
     requiredChecks: []
   - name: group-a-transactions
     service: transactions
-    teams: []
+    teams:
+      - group-a
     aws: false
     terraform: false
     requiredChecks: []
   - name: group-b-accounts
     service: accounts
-    teams: []
+    teams:
+      - group-b
     aws: false
     terraform: false
     requiredChecks: []
   - name: group-b-transactions
     service: transactions
-    teams: []
+    teams:
+      - group-b
     aws: false
     terraform: false
     requiredChecks: []
   - name: group-c-accounts
     service: accounts
-    teams: []
+    teams:
+      - group-c
     aws: false
     terraform: false
     requiredChecks: []
   - name: group-c-transactions
     service: transactions
-    teams: []
+    teams:
+      - group-c
     aws: false
     terraform: false
     requiredChecks: []
   - name: group-d-accounts
     service: accounts
-    teams: []
+    teams:
+      - group-d
     aws: false
     terraform: false
     requiredChecks: []
   - name: group-d-transactions
     service: transactions
-    teams: []
+    teams:
+      - group-d
     aws: false
     terraform: false
     requiredChecks: []
   - name: group-e-accounts
     service: accounts
-    teams: []
+    teams:
+      - group-e
     aws: false
     terraform: false
     requiredChecks: []
   - name: group-e-transactions
     service: transactions
-    teams: []
+    teams:
+      - group-e
     aws: false
     terraform: false
     requiredChecks: []
   - name: group-f-accounts
     service: accounts
-    teams: []
+    teams:
+      - group-f
     aws: false
     terraform: false
     requiredChecks: []
   - name: group-f-transactions
     service: transactions
-    teams: []
+    teams:
+      - group-f
     aws: false
     terraform: false
     requiredChecks: []
   - name: group-g-accounts
     service: accounts
-    teams: []
+    teams:
+      - group-g
     aws: false
     terraform: false
     requiredChecks: []
   - name: group-g-transactions
     service: transactions
-    teams: []
+    teams:
+      - group-g
     aws: false
     terraform: false
     requiredChecks: []
   - name: group-h-accounts
     service: accounts
-    teams: []
+    teams:
+      - group-h
     aws: false
     terraform: false
     requiredChecks: []
   - name: group-h-transactions
     service: transactions
-    teams: []
+    teams:
+      - group-h
     aws: false
     terraform: false
     requiredChecks: []
   - name: group-i-accounts
     service: accounts
-    teams: []
+    teams:
+      - group-i
     aws: false
     terraform: false
     requiredChecks: []
   - name: group-i-transactions
     service: transactions
-    teams: []
+    teams:
+      - group-i
     aws: false
     terraform: false
     requiredChecks: []
   - name: group-j-accounts
     service: accounts
-    teams: []
+    teams:
+      - group-j
     aws: false
     terraform: false
     requiredChecks: []
   - name: group-j-transactions
     service: transactions
-    teams: []
+    teams:
+      - group-j
     aws: false
     terraform: false
     requiredChecks: []
   - name: group-k-accounts
     service: accounts
-    teams: []
+    teams:
+      - group-k
     aws: false
     terraform: false
     requiredChecks: []
   - name: group-k-transactions
     service: transactions
-    teams: []
+    teams:
+      - group-k
     aws: false
     terraform: false
     requiredChecks: []
   - name: group-l-accounts
     service: accounts
-    teams: []
+    teams:
+      - group-l
     aws: false
     terraform: false
     requiredChecks: []
   - name: group-l-transactions
     service: transactions
-    teams: []
+    teams:
+      - group-l
     aws: false
     terraform: false
     requiredChecks: []
