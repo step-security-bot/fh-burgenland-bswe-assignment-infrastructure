@@ -18,7 +18,7 @@ teams:
     members:
       - stx85
       - sarah390
-      - Semi
+      # - lneub
   - name: group-e
     members:
       - Vanessa-prinz
@@ -26,7 +26,7 @@ teams:
       - JuliaMichler
   - name: group-f
     members:
-      - Beginner
+      # - mneuh
       - sourifh
       - andwein
   - name: group-g
