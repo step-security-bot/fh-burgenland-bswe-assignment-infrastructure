@@ -258,3 +258,51 @@ repositories:
     aws: false
     terraform: false
     requiredChecks: []
+  - name: group-aj-broker
+    service: broker
+    teams:
+      - group-a
+      - group-j
+    aws: false
+    terraform: false
+    requiredChecks: []
+  - name: group-bc-broker
+    service: broker
+    teams:
+      - group-b
+      - group-c
+    aws: false
+    terraform: false
+    requiredChecks: []
+  - name: group-di-broker
+    service: broker
+    teams:
+      - group-d
+      - group-i
+    aws: false
+    terraform: false
+    requiredChecks: []
+  - name: group-ef-broker
+    service: broker
+    teams:
+      - group-e
+      - group-f
+    aws: false
+    terraform: false
+    requiredChecks: []
+  - name: group-gl-broker
+    service: broker
+    teams:
+      - group-g
+      - group-l
+    aws: false
+    terraform: false
+    requiredChecks: []
+  - name: group-hk-broker
+    service: broker
+    teams:
+      - group-h
+      - group-k
+    aws: false
+    terraform: false
+    requiredChecks: []
