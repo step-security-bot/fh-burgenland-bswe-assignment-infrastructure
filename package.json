@@ -24,6 +24,7 @@
   "engines": {
     "node": ">=20"
   },
+  "packageManager": "yarn@4.5.0",
   "dependencies": {
     "@pulumi/aws": "^6.51.1",
     "@pulumi/github": "^6.2.5",
@@ -38,6 +39,7 @@
   },
   "devDependencies": {
     "@eslint/compat": "^1.1.1",
+    "@types/node": "^22.7.6",
     "eslint": "^9.10.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-functional": "^7.0.2",
@@ -49,14 +51,6 @@
     "typescript": "^5.6.2",
     "typescript-eslint": "^8.5.0"
   },
-  "files": [
-    "build/main",
-    "!**/*.spec.*",
-    "!**/*.json",
-    "CHANGELOG.md",
-    "LICENSE",
-    "README.md"
-  ],
   "prettier": {
     "singleQuote": true
   }
