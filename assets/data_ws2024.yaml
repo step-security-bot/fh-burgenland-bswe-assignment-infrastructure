@@ -1,5 +1,8 @@
 ---
 teams:
+  - name: group-dmuehlbachler
+    members:
+      - muhlba91
   - name: group-a
     members:
       - LeonFHBurgenland
